@@ -30,4 +30,4 @@ class AnnouncementsView(viewsets.ModelViewSet):
     serializer_class = AnnouncementSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = (IsStaffOrReadOnly,)
-    _paginator = CustomPagination(page_size=5, page_query_param="p")
+    _paginator = CustomPagination(page_size=5, page_size_query_param="limit", page_query_param="p")

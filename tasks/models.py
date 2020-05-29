@@ -8,6 +8,12 @@ class ScoreModeEnum(Enum):
     GROUP_MIN = "GROUP_MIN"
 
 
+class DifficultyEnum(Enum):
+    easy = "easy"
+    medium = "medium"
+    hard = "hard"
+
+
 class DiffModeEnum(Enum):
     C1 = "C1"
 
@@ -22,7 +28,8 @@ class Tag(models.Model):
 class Task(models.Model):
     task_code = models.CharField(max_length=16, unique=True)
     title = models.CharField(max_length=255)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, to_field="username")
+    difficulty = models.CharField(max_length=20, choices=[(diff.name, diff.value) for diff in DifficultyEnum])
     description = models.TextField()
     tags = models.ManyToManyField(Tag)
     score_mode = models.CharField(max_length=20, choices=[(mode.name, mode.value) for mode in ScoreModeEnum])

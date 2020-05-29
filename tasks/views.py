@@ -26,8 +26,8 @@ class IsStaffOrReadOnly(permissions.BasePermission):
 class TasksView(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
     queryset = Task.objects.all()
     # permission_classes = (IsStaffOrReadOnly,)
-    # authentication_classes = [TokenAuthentication]
-    _paginator = CustomPagination(page_size=5, page_query_param="p")
+    # authentication_classes = [TokenAuthentication]    
+    _paginator = CustomPagination(page_size=5, page_size_query_param="limit", page_query_param="p")    
 
     """
     Override get_serializer_class(self) function to specify what serializer will be used
