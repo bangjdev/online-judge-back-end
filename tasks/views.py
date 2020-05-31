@@ -1,11 +1,12 @@
 from django.shortcuts import render
 
-# Create your views here.
 from rest_framework import permissions, mixins
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.response import Response
+from rest_framework.status import *
 
-from lqdoj_backend.paginations import CustomPagination
+from lqdoj_backend.json_response import *
 from tasks.models import Task
 from tasks.serializers import TaskListSerializer, TaskSerializer
 
@@ -26,14 +27,25 @@ class IsStaffOrReadOnly(permissions.BasePermission):
 class TasksView(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
     queryset = Task.objects.all()
     # permission_classes = (IsStaffOrReadOnly,)
-    # authentication_classes = [TokenAuthentication]    
+    # authentication_classes = [TokenAuthentication]
 
     """
-    Override get_serializer_class(self) function to specify what serializer will be used
+    Override list function to customize the response's format
     """
+    def list(self, request, *args, **kwargs):
+        tasks_list = self.get_queryset()
+        serialized_tasks_list = TaskListSerializer(tasks_list, many=True).data        
+        return Response(data=create_message(
+                                        message_code="LOADED_SUCCESSFULLY", 
+                                        results=serialized_tasks_list), 
+                        status=HTTP_200_OK)
 
-    def get_serializer_class(self):
-        if self.action == 'retrieve':
-            return TaskSerializer
-        return TaskListSerializer
+    def retrieve(self, request, *args, **kwargs):        
+        task = self.get_queryset().get(id=kwargs['pk'])
+        serialized_task = TaskSerializer(task).data
+        return Response(data=create_message(
+                                        message_code="LOADED_SUCCESSFULLY", 
+                                        results=serialized_task), 
+                        status=HTTP_200_OK)
+
 

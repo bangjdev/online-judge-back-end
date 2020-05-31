@@ -38,9 +38,9 @@ class TokenView(mixins.CreateModelMixin,
             user = authenticate(username=username, password=password)            
             if user is not None:
                 token, created = self.queryset.get_or_create(user=user)
-                return Response(data=create_message(LOGIN_SUCCESS, {'token': token.key}), status=HTTP_200_OK)
+                return Response(data=create_message(messages_code="LOGIN_SUCCESS", results={'token': token.key}), status=HTTP_200_OK)
             else:
-                return Response(data=create_message(LOGIN_FAIL), status=HTTP_401_UNAUTHORIZED)
+                return Response(data=create_message(messages_code="LOGIN_FAIL"), status=HTTP_401_UNAUTHORIZED)
         except e:
             print(e)
             return Response(status=HTTP_500_INTERNAL_SERVER_ERROR)
@@ -54,8 +54,8 @@ class TokenView(mixins.CreateModelMixin,
         try:
             token = request.auth
             if token.key != kwargs['key']:
-                return Response(data=create_message(LOGOUT_FAIL), status=HTTP_401_UNAUTHORIZED)
+                return Response(data=create_message(messages_code="LOGOUT_FAIL"), status=HTTP_401_UNAUTHORIZED)
             self.queryset.get(key=token).delete()
-            return Response(data=create_message(LOGOUT_SUCCESS), status=HTTP_200_OK)
+            return Response(data=create_message(messages_code="LOGOUT_SUCCESS"), status=HTTP_200_OK)
         except:
             return Response(status=HTTP_500_INTERNAL_SERVER_ERROR)
