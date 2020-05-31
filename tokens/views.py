@@ -7,6 +7,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED, HTTP_500_INTERNAL_SERVER_ERROR
 from rest_framework.viewsets import GenericViewSet
+from lqdoj_backend.messages_code import *
+from lqdoj_backend.json_response import *
 
 
 class TokenSerializer(serializers.ModelSerializer):
@@ -33,13 +35,14 @@ class TokenView(mixins.CreateModelMixin,
             data = json.loads(request.body)
             username = data['username']
             password = data['password']
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=username, password=password)            
             if user is not None:
                 token, created = self.queryset.get_or_create(user=user)
-                return Response(data={'token': token.key}, status=HTTP_200_OK)
+                return Response(data=create_message(LOGIN_SUCCESS, {'token': token.key}), status=HTTP_200_OK)
             else:
-                return Response(status=HTTP_401_UNAUTHORIZED)
-        except:
+                return Response(data=create_message(LOGIN_FAIL), status=HTTP_401_UNAUTHORIZED)
+        except e:
+            print(e)
             return Response(status=HTTP_500_INTERNAL_SERVER_ERROR)
 
     """
@@ -51,8 +54,8 @@ class TokenView(mixins.CreateModelMixin,
         try:
             token = request.auth
             if token.key != kwargs['key']:
-                return Response(status=HTTP_401_UNAUTHORIZED)
+                return Response(data=create_message(LOGOUT_FAIL), status=HTTP_401_UNAUTHORIZED)
             self.queryset.get(key=token).delete()
-            return Response(status=HTTP_200_OK)
+            return Response(data=create_message(LOGOUT_SUCCESS), status=HTTP_200_OK)
         except:
             return Response(status=HTTP_500_INTERNAL_SERVER_ERROR)

@@ -1,8 +1,9 @@
 import json
 
 
-def create_message(message):
+def create_message(code, results={}):
     data = {
-        'message': message
+    	'message_code': code,
+        'results': results
     }
-    return json.dumps(data)
+    return data
