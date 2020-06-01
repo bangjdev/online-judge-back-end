@@ -2,6 +2,8 @@ from rest_framework import permissions, serializers
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 
+from django.template.defaultfilters import truncatewords
+
 from lqdoj_backend.paginations import CustomPagination
 from .models import Announcement
 
@@ -20,9 +22,14 @@ class IsStaffOrReadOnly(permissions.BasePermission):
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
+    content = serializers.SerializerMethodField()
     class Meta:
         model = Announcement
         fields = '__all__'
+
+    def get_content(self, announcement):
+        return truncatewords(announcement.content, 100)
+
 
 
 class AnnouncementsView(viewsets.ModelViewSet):
