@@ -2,7 +2,7 @@ from rest_framework import permissions, serializers
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 
-from django.template.defaultfilters import truncatewords
+from django.template.defaultfilters import truncatechars_html
 
 from lqdoj_backend.paginations import CustomPagination
 from .models import Announcement
@@ -28,7 +28,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_content(self, announcement):
-        return truncatewords(announcement.content, 100)
+        return truncatechars_html(announcement.content, 100)
 
 
 
