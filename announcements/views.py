@@ -47,19 +47,10 @@ class AnnouncementsView(viewsets.ModelViewSet):
     permission_classes = (IsStaffOrReadOnly,)
     _paginator = CustomPagination(
         page_size=5, page_size_query_param="limit", page_query_param="p")
-
+    
     """
-    Override list function to customize the response's format
+    Override retrieve function to customize the response's format
     """
-
-    def list(self, request, *args, **kwargs):
-        announcements_list = self.get_queryset()
-        serialized_announcements_list = AnnouncementSerializer(announcements_list, many=True).data
-        return Response(data=create_message(
-                                    message_code="LOADED_SUCCESSFULLY",
-                                    results=serialized_announcements_list),
-                        status=HTTP_200_OK)
-
     def retrieve(self, request, *args, **kwargs):
         announcement = self.get_queryset().get(id=kwargs['pk'])
         serialized_announcement = AnnouncementDetailSerializer(announcement).data
