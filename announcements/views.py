@@ -13,6 +13,7 @@ from lqdoj_backend.json_response import *
 
 class IsStaffOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
+        print(request.method)
         # Allow all readonly request
         if request.method in permissions.SAFE_METHODS:
             return True

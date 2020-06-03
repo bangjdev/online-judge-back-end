@@ -12,6 +12,8 @@ from rest_framework.viewsets import ModelViewSet
 from users.forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 from users.serializers import UserSerializer
 
+from lqdoj_backend.json_response import *
+
 
 class UserView(ModelViewSet):
     queryset = User.objects.all()
@@ -29,14 +31,14 @@ class UserView(ModelViewSet):
             return Response(status=HTTP_401_UNAUTHORIZED)
         user = request.user  # Retrieve user from token
         serialized = UserSerializer(user)
-        return Response(data=serialized.data, status=HTTP_200_OK)
+        return Response(data=create_message(results=serialized.data), status=HTTP_200_OK)
 
     """
     Custom create function to create users, using custom UserRegistrationForm
     """
 
     def create(self, request, *args, **kwargs):
-        form = UserRegistrationForm(data=json.loads(request.body))
+        form=UserRegistrationForm(data=json.loads(request.body))
         if form.is_valid():  # Check form data
             form.save()
             return Response(status=HTTP_201_CREATED)
@@ -56,7 +58,8 @@ class UserView(ModelViewSet):
         if request.user.username != kwargs[self.lookup_field]:
             return Response(status=HTTP_403_FORBIDDEN)
 
-        form = PasswordChangeForm(data=json.loads(request.body), user=request.user)
+        form=PasswordChangeForm(data=json.loads(
+            request.body), user=request.user)
         if form.is_valid():
             form.save()
             return Response(status=HTTP_200_OK)
@@ -76,15 +79,16 @@ class UserView(ModelViewSet):
         if request.user.username != kwargs[self.lookup_field]:
             return Response(status=HTTP_403_FORBIDDEN)
 
-        u_form = UserUpdateForm(data=request.data, instance=request.user)
-        p_form = ProfileUpdateForm(data=request.data.dict(), files=request.FILES, instance=request.user.profile)
+        u_form=UserUpdateForm(data=request.data, instance=request.user)
+        p_form=ProfileUpdateForm(data=request.data.dict(
+        ), files=request.FILES, instance=request.user.profile)
 
         if u_form.is_valid():
             u_form.save()
             p_form.save()
             return Response(status=HTTP_200_OK)
         else:
-            return_data = u_form.errors
+            return_data=u_form.errors
             if u_form.is_valid():
-                return_data = p_form.errors
+                return_data=p_form.errors
             return Response(data=return_data, status=HTTP_400_BAD_REQUEST)
