@@ -1,6 +1,12 @@
+import hashlib
+import os
+import uuid
+
 from django.contrib.auth.models import User
 from django.db import models
 from enum import Enum
+
+from lqdoj_backend.settings import TEST_FOLDER
 
 
 class ScoreModeEnum(Enum):
@@ -45,12 +51,3 @@ class Problem(models.Model):
 
     def __str__(self):
         return self.task_code + " by " + self.author.__str__()
-
-
-class Test(models.Model):
-    task = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
-    position = models.IntegerField()
-    input = models.FileField()
-    output = models.FileField()
-

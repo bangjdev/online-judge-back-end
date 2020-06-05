@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'tokens.apps.TokensConfig',
     'problems.apps.TasksConfig',
     'submissions.apps.SubmissionsConfig',
+    'tests.apps.TestsConfig',
     'judger.apps.JudgerConfig',
     'rest_framework',
     'rest_framework.authtoken',
@@ -134,6 +135,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 AVATAR_FOLDER = 'avatars'
+SOURCE_CODE_FOLDER = 'source_codes'
+TEST_FOLDER = 'tests'
 
 # String constants
 MSG_USER_CREATED = "User created successfully"
