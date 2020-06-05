@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework.status import *
 
 from lqdoj_backend.json_response import *
-from tasks.models import Task
-from tasks.serializers import TaskListSerializer, TaskSerializer
+from problems.models import Problem
+from problems.serializers import TaskListSerializer, TaskSerializer
 
 
 class IsStaffOrReadOnly(permissions.BasePermission):
@@ -25,7 +25,7 @@ class IsStaffOrReadOnly(permissions.BasePermission):
 
 
 class TasksView(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
-    queryset = Task.objects.all()
+    queryset = Problem.objects.all()
     # permission_classes = (IsStaffOrReadOnly,)
     # authentication_classes = [TokenAuthentication]
 
@@ -41,7 +41,7 @@ class TasksView(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet
                         status=HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):        
-        task = self.get_queryset().get(id=kwargs['pk'])
+        task = self.get_queryset().get(task_code=kwargs['pk'])
         serialized_task = TaskSerializer(task).data
         return Response(data=create_message(
                                         message_code="LOADED_SUCCESSFULLY", 

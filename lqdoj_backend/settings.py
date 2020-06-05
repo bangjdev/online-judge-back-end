@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'announcements.apps.AnnouncementsConfig',
     'tokens.apps.TokensConfig',
-    'tasks.apps.TasksConfig',
+    'problems.apps.TasksConfig',
+    'submissions.apps.SubmissionsConfig',
+    'judger.apps.JudgerConfig',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
@@ -139,3 +141,9 @@ MSG_INVALID_TOKEN = "Invalid token"
 MSG_WRONG_OLD_PASS = "Old password didn't match"
 MSG_DIFF_NEW_PASS = "The two password fields didn't match"
 
+# Celery
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'

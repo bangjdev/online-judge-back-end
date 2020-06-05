@@ -25,7 +25,7 @@ class Tag(models.Model):
         return self.tag_name
 
 
-class Task(models.Model):
+class Problem(models.Model):
     task_code = models.CharField(max_length=16, unique=True)
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, to_field="username")
@@ -48,7 +48,7 @@ class Task(models.Model):
 
 
 class Test(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Problem, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     position = models.IntegerField()
     input = models.FileField()

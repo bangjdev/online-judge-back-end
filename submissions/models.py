@@ -1,0 +1,34 @@
+from enum import Enum
+
+from django.db import models
+from django.contrib.auth.models import User
+from problems.models import Problem
+
+
+class Language(models.Model):
+    language = models.CharField(max_length=8, unique=True)
+    compiler = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.language
+
+
+class SubmissionStatus(Enum):
+    PENDING = "PENDING_STATUS"
+    JUDGING = "JUDGING_STATUS"
+    FINISHED = "FINISHED_STATUS"
+
+
+class Submission(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username")
+    task = models.ForeignKey(Problem, on_delete=models.CASCADE, to_field="task_code")
+    source_code = models.TextField()
+    language = models.ForeignKey(Language, models.CASCADE, to_field="language")
+    status = models.CharField(max_length=20, choices=[(status.name, status.value) for status in SubmissionStatus],
+                              default=SubmissionStatus.PENDING)
+    test_counts = models.IntegerField(default=0)
+    result = models.CharField(max_length=256, default="")
+    time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.author.__str__() + " submitted at " + self.time.__str__() + " using " + self.language.__str__()
