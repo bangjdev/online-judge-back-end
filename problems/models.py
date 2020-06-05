@@ -53,3 +53,4 @@ class Test(models.Model):
     position = models.IntegerField()
     input = models.FileField()
     output = models.FileField()
+

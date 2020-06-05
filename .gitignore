@@ -110,3 +110,4 @@ venv.bak/
 
 # IDE stuff:
 .idea/
+/localfiles/
