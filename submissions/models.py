@@ -18,6 +18,7 @@ class Language(models.Model):
 
 class SubmissionStatus(Enum):
     PENDING = "PENDING_STATUS"
+    COMPILING = "COMPILING_STATUS"
     JUDGING = "JUDGING_STATUS"
     FINISHED = "FINISHED_STATUS"
 
@@ -27,12 +28,13 @@ def get_encrypted_file_path(instance, filename):
     extension = os.path.splitext(filename)[1]
     filename = instance.author.username + uuid.uuid4().__str__()
     final_filename = '{}{}'.format(filename, extension)
+    print(upload_to)
     return os.path.join(upload_to, final_filename)
 
 
 class Submission(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username")
-    task = models.ForeignKey(Problem, on_delete=models.CASCADE, to_field="task_code")
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE, to_field="problem_code")
     source_code = models.FileField(upload_to=get_encrypted_file_path)
     language = models.ForeignKey(Language, models.CASCADE, to_field="language")
     status = models.CharField(max_length=20, choices=[(status.name, status.value) for status in SubmissionStatus],

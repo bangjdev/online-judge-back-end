@@ -25,6 +25,7 @@ urlpatterns = [
     path('tokens/', include('tokens.urls')),
     path('problems/', include('problems.urls')),
     path('submissions/', include('submissions.urls')),
+    path('tests/', include('tests.urls')),
 ]
 
 if settings.DEBUG:

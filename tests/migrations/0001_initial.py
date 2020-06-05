@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('position', models.IntegerField()),
                 ('input', models.FileField(upload_to=tests.models.get_encrypted_file_path)),
                 ('output', models.FileField(upload_to=tests.models.get_encrypted_file_path)),
-                ('task', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='problems.Problem')),
+                ('problem', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='problems.Problem')),
             ],
         ),
     ]

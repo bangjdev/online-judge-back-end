@@ -1,12 +1,7 @@
-import hashlib
-import os
-import uuid
+from enum import Enum
 
 from django.contrib.auth.models import User
 from django.db import models
-from enum import Enum
-
-from lqdoj_backend.settings import TEST_FOLDER
 
 
 class ScoreModeEnum(Enum):
@@ -32,7 +27,7 @@ class Tag(models.Model):
 
 
 class Problem(models.Model):
-    task_code = models.CharField(max_length=16, unique=True)
+    problem_code = models.CharField(max_length=16, unique=True)
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, to_field="username")
     difficulty = models.CharField(max_length=20, choices=[(diff.name, diff.value) for diff in DifficultyEnum])
@@ -50,4 +45,4 @@ class Problem(models.Model):
         return "; ".join([p.tag_name for p in self.tags.all()])
 
     def __str__(self):
-        return self.task_code + " by " + self.author.__str__()
+        return self.problem_code + " by " + self.author.__str__()

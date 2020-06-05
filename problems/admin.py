@@ -6,7 +6,7 @@ from submissions.models import Language, Submission
 
 
 class ProblemAdmin(admin.ModelAdmin):
-    list_display = ('task_code', 'title', 'problem_tags', 'author',)
+    list_display = ('problem_code', 'title', 'problem_tags', 'author',)
     filter_horizontal = ('tags',)
 
 

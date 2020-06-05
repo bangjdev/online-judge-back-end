@@ -6,7 +6,7 @@ from tests.models import Test
 
 
 class TestAdmin(admin.ModelAdmin):
-    list_display = ('task', 'name', 'position', 'input', 'output')
+    list_display = ('problem', 'name', 'position', 'input', 'output')
 
 
 admin.site.register(Test, TestAdmin)

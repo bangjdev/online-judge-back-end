@@ -130,10 +130,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
 AVATAR_FOLDER = 'avatars'
 SOURCE_CODE_FOLDER = 'source_codes'
 TEST_FOLDER = 'tests'
@@ -150,3 +150,13 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
+
+
+# Judger
+JUDGER_ERRORS = [
+    "ACCEPTED",
+    "TIME_LIMIT_EXCEEDED",
+    "MEMORY_LIMIT_EXCEEDED",
+    "RUNTIME_ERROR",
+    "WRONG_ANSWER"
+]

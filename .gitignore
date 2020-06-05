@@ -63,10 +63,10 @@ instance/
 .scrapy
 
 # Media stuff:
-media/*
-!media/avatars/
-media/avatars/*
-!media/avatars/default.jpg
+static/*
+!static/avatars/
+static/avatars/*
+!static/avatars/default.jpg
 
 # Sphinx documentation
 docs/_build/
@@ -111,3 +111,6 @@ venv.bak/
 # IDE stuff:
 .idea/
 /localfiles/
+/judger/judger
+/submissions/judger
+/media/
