@@ -1,5 +1,4 @@
 #include "judger.h"
-#include <iostream>
 
 Judger::Judger(std::string c, std::string fi, std::string fo, std::string ck, std::string co,
            std::string ml, std::string tl) {
@@ -58,10 +57,8 @@ std::string get_command_name(std::string command_path) {
 std::string Judger::judge() {
     std::string result;
     // Init sandbox
-    std::cout << "cleaning up\n";
     exec_command("isolate --cleanup");    
     exec_result("isolate --init", result);
-    std::cout << "init sandbox " << result << "\n";
     exec_command("sudo cp " + command + " " + result + "/box/");
 
     // Run the program inside sandbox
@@ -71,8 +68,7 @@ std::string Judger::judge() {
                                                           % time_lim            
                                                           % get_command_name(command)
                                                           % input_file          
-                                                          % code_output).str(); 
-    std::cout << isolate_cmd << "\n";
+                                                          % code_output).str();
     bool success = exec_result(isolate_cmd, result);
 
     if (!success) {

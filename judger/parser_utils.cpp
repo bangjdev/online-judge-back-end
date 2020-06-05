@@ -1,6 +1,5 @@
 #include "parser_utils.h"
 #include <regex>
-#include <iostream>
 
 
 std::vector<std::string> split(std::string str, const std::string &delimiter) {

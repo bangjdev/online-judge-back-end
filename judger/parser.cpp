@@ -1,7 +1,6 @@
 #include "parser.h"
 #include <cstring>
 #include <string>
-#include <iostream>
 
 Parser::Parser() {
     this->paramsMap.clear();

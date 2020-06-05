@@ -1,6 +1,5 @@
 #include "judger.h"
 #include "parser.h"
-#include <iostream>
 #include <string>
 
 Parser parser;

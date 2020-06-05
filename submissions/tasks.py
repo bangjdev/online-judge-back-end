@@ -43,7 +43,7 @@ def run_judger(submission_id):
     compile_code = os.system(compiler.format(output_exec_path, submission.source_code.path))
     if compile_code != 0:
         update_submission_status(submission, status=SubmissionStatus.FINISHED, result="COMPILE_ERROR")
-        return
+        return "COMPILE_ERROR"
 
     # Get set of tests
     tests_set = load_tests(submission.problem)
@@ -69,8 +69,9 @@ def run_judger(submission_id):
         ))
         if judge_code != 0:
             update_submission_status(submission, status=SubmissionStatus.FINISHED, result=JUDGER_ERRORS[judge_code])
-            return judge_code
+            return JUDGER_ERRORS[judge_code]
         else:
             update_submission_status(submission, current_test=test.position)
         sleep(5) # pseudo time lag
     update_submission_status(submission, status=SubmissionStatus.FINISHED, result=JUDGER_ERRORS[0])
+    return JUDGER_ERRORS[0]
