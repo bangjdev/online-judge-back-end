@@ -14,7 +14,7 @@ sudo python3 -m pip install -r dependencies.txt
 ### 2. Migrate db
 Run:
 ```bash
-sudo python3 manage.py migrate
+sudo python3 manage.py migrate --run-syncdb
 ```
 
 ## Usage
@@ -31,3 +31,7 @@ Make sure you can access the admin page at:
 ```url
 localhost:8000/admin
 ```
+
+## Dependencies:
+This backend server uses celery and redis for the distributed async task queue, so you will need to
+install and configurate theses settings properly.
