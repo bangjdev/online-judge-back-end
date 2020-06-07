@@ -3,14 +3,14 @@ from rest_framework import serializers
 from problems.models import Problem
 
 
-class TaskListSerializer(serializers.ModelSerializer):
+class ProblemListSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model = Problem
         fields = ('id', 'problem_code', 'title', 'difficulty', 'tags', )
 
 
-class TaskSerializer(serializers.ModelSerializer):
+class ProblemSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model = Problem
