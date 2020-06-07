@@ -8,7 +8,7 @@ from rest_framework.status import *
 
 from lqdoj_backend.json_response import *
 from problems.models import Problem
-from problems.serializers import TaskListSerializer, TaskSerializer
+from problems.serializers import ProblemListSerializer, ProblemSerializer
 
 
 class IsStaffOrReadOnly(permissions.BasePermission):
@@ -24,7 +24,7 @@ class IsStaffOrReadOnly(permissions.BasePermission):
         return request.user.is_staff  # Check staff permission
 
 
-class TasksView(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
+class ProblemsView(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
     queryset = Problem.objects.all()
     # permission_classes = (IsStaffOrReadOnly,)
     # authentication_classes = [TokenAuthentication]
@@ -33,19 +33,19 @@ class TasksView(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet
     Override list function to customize the response's format
     """
     def list(self, request, *args, **kwargs):
-        tasks_list = self.get_queryset()
-        serialized_tasks_list = TaskListSerializer(tasks_list, many=True).data        
+        problems_list = self.get_queryset()
+        serialized_problems_list = ProblemListSerializer(problems_list, many=True).data        
         return Response(data=create_message(
                                         message_code="LOADED_SUCCESSFULLY", 
-                                        results=serialized_tasks_list), 
+                                        results=serialized_problems_list), 
                         status=HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):        
-        task = self.get_queryset().get(task_code=kwargs['pk'])
-        serialized_task = TaskSerializer(task).data
+        problem = self.get_queryset().get(problem_code=kwargs['pk'])
+        serialized_problem = ProblemSerializer(problem).data
         return Response(data=create_message(
                                         message_code="LOADED_SUCCESSFULLY", 
-                                        results=serialized_task), 
+                                        results=serialized_problem), 
                         status=HTTP_200_OK)
 
 
