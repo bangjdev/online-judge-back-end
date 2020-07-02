@@ -1,5 +1,4 @@
 from enum import Enum
-import os, hashlib, uuid
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -11,6 +10,7 @@ from problems.models import Problem
 class Language(models.Model):
     language = models.CharField(max_length=8, unique=True)
     compiler = models.CharField(max_length=256)
+    source_extension = models.CharField(max_length=8, default="")
 
     def __str__(self):
         return self.language
@@ -23,19 +23,10 @@ class SubmissionStatus(Enum):
     FINISHED = "FINISHED_STATUS"
 
 
-def get_encrypted_file_path(instance, filename):
-    upload_to = os.path.join(hashlib.sha1(SOURCE_CODE_FOLDER.encode('UTF-8')).hexdigest())
-    extension = os.path.splitext(filename)[1]
-    filename = instance.author.username + uuid.uuid4().__str__()
-    final_filename = '{}{}'.format(filename, extension)
-    print(upload_to)
-    return os.path.join(upload_to, final_filename)
-
-
 class Submission(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username")
-    problem = models.ForeignKey(Problem, on_delete=models.CASCADE, to_field="problem_code")
-    source_code = models.FileField(upload_to=get_encrypted_file_path)
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    source_code = models.TextField()
     language = models.ForeignKey(Language, models.CASCADE, to_field="language")
     status = models.CharField(max_length=20, choices=[(status.name, status.value) for status in SubmissionStatus],
                               default=SubmissionStatus.PENDING)

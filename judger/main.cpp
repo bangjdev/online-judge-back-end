@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
 
     Judger judger(command, input_file, output_file, checker, code_output, mem_lim, time_lim);
 
-    result = judger.judge();
+    std::string result = judger.judge();
     if (result == TLE_MESS) {
     	return 1;
     }

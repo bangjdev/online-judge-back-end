@@ -24,7 +24,7 @@ class SubmissionForm(forms.ModelForm):
 
 
 class SubmissionsView(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, GenericViewSet):
-    queryset = Submission.objects.all()
+    queryset = Submission.objects.all().order_by("-time")
     paginator = CustomPagination(page_size=10, page_size_query_param="limit", page_query_param="p")
     serializer_class = SubmissionsSerializer
 
@@ -33,10 +33,10 @@ class SubmissionsView(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.C
     """
     def create(self, request, *args, **kwargs):
         print("Receive a submission")
-        # submission_data = json.loads(json.dumps(request.data))
-        # print(submission_data)
 
-        submission_form = SubmissionForm(data=request.data.dict(), files=request.FILES)
+        submission_data = request.data.dict()
+
+        submission_form = SubmissionForm(data=request.data.dict())
 
         if submission_form.is_valid():
             new_submission = submission_form.save()
