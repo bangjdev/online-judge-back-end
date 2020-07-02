@@ -25,7 +25,7 @@ class SubmissionStatus(Enum):
 
 class Submission(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username")
-    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE, to_field="problem_code")
     source_code = models.TextField()
     language = models.ForeignKey(Language, models.CASCADE, to_field="language")
     status = models.CharField(max_length=20, choices=[(status.name, status.value) for status in SubmissionStatus],
