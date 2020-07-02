@@ -14,7 +14,7 @@ from submissions.tasks import run_judger
 class SubmissionsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Submission
-        fields = ("id", "author", "problem", "language", "result", "time", )
+        fields = ("id", "author", "problem", "language", "status", "test_counts", "time", )
 
 class SubmissionDetailSerializer(serializers.ModelSerializer):
     class Meta:

@@ -20,8 +20,8 @@ class SubmissionStatus(Enum):
     PENDING = "PENDING_STATUS"
     COMPILING = "COMPILING_STATUS"
     JUDGING = "JUDGING_STATUS"
-    FINISHED = "FINISHED_STATUS"
-
+    COMPILE_ERROR = "COMPILE_ERROR_STATUS"
+    
 
 class Submission(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username")

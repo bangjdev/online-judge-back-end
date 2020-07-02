@@ -14,17 +14,11 @@ OUTPUT_EXEC_NAME = "userexec"
 JUDGER_COMMAND_FMT = "judger/judger -c {} -if {} -of {} -ck {} -uo {} -m {} -t {}"
 
 
-def update_submission_status(submission, status=None, current_test=None, result=None):
+def update_submission_status(submission, status=None, current_test=None):
     if status:
         submission.status = status
-    if (not current_test) and result:  # Finished
-        submission.status = SubmissionStatus.FINISHED
-        submission.result = result
-    else:
-        if current_test and (not result):
-            submission.status = SubmissionStatus.JUDGING
-            submission.test_counts = current_test
-
+    if current_test:
+        submission.test_counts = current_test
     submission.save()
 
 
@@ -56,13 +50,13 @@ def run_judger(submission_id):
     code_exec_name = submission.author.username + "_" + uuid.uuid4().__str__() + "_" + OUTPUT_EXEC_NAME
     output_exec_path = os.path.join(OUTPUT_EXEC_PATH, code_exec_name)
 
-    update_submission_status(submission, status=SubmissionStatus.COMPILING)
+    update_submission_status(submission=submission, status=SubmissionStatus.COMPILING)
     compiler = Language.objects.get(language=submission.language).compiler
     compile_code = subprocess.call(compiler.format(output_exec_path, source_code_file), shell=True)
 
     if compile_code != 0:
         update_submission_status(
-            submission, status=SubmissionStatus.FINISHED, result="COMPILE_ERROR")
+            submission, status=SubmissionStatus.COMPILE_ERROR)
         return "COMPILE_ERROR"
 
     # Get set of tests
@@ -89,13 +83,13 @@ def run_judger(submission_id):
         ), shell=True)
         if judge_code != 0:
             update_submission_status(
-                submission=submission, status=SubmissionStatus.FINISHED, result=JUDGER_ERRORS[judge_code])
+                submission=submission, status=JUDGER_ERRORS[judge_code])
             return JUDGER_ERRORS[judge_code]
         else:
-            update_submission_status(submission, current_test=test.position)
-        # sleep(5) # pseudo time lag
+            update_submission_status(submission=submission, current_test=test.position)
+        sleep(5) # pseudo time lag
     update_submission_status(
-        submission=submission, status=SubmissionStatus.FINISHED, result=JUDGER_ERRORS[0])
+        submission=submission, status=JUDGER_ERRORS[0])
 
     # Clean up
     subprocess.call("rm -f " + source_code_file, shell=True)
