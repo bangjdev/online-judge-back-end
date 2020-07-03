@@ -22,7 +22,7 @@ To create superuser account, run:
 ```bash
 sudo python3 manage.py createsuperuser
 ```
-To run in th development server:
+To run in the development server:
 ```bash
 sudo python3 manage.py runserver 0.0.0.0:8000
 ```
@@ -32,6 +32,16 @@ Make sure you can access the admin page at:
 localhost:8000/admin
 ```
 
-## Dependencies:
+## Dependencies
 This backend server uses celery and redis for the distributed async task queue, so you will need to
-install and configurate theses settings properly.
+install and configure theses settings properly.
+
+## Celery worker for async judging process
+In this project, we are currently using redis as a backend for celery, run redis:
+```bash
+redis-server
+```
+To start celery worker, cd to the project folder and run:
+```bash
+sudo celery -A lqdoj_backend worker -l info
+```
