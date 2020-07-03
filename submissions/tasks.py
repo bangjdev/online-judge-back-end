@@ -14,7 +14,10 @@ OUTPUT_EXEC_NAME = "userexec"
 JUDGER_COMMAND_FMT = "judger/judger -c {} -if {} -of {} -ck {} -uo {} -m {} -t {}"
 
 
-def update_submission_status(submission, status=None, current_test=None):
+def update_submission_status(submission, status=None, result=None, current_test=None):
+    if result:
+        submission.result = result
+        submission.status = SubmissionStatus.FINISHED
     if status:
         submission.status = status
     if current_test:
@@ -56,11 +59,12 @@ def run_judger(submission_id):
 
     if compile_code != 0:
         update_submission_status(
-            submission, status=SubmissionStatus.COMPILE_ERROR)
+            submission, status=SubmissionStatus.FINISHED, result=SubmissionStatus.COMPILE_ERROR)
         return "COMPILE_ERROR"
 
     # Get set of tests
     tests_set = load_tests(submission.problem)
+    
     # Judging using judger
     update_submission_status(submission, status=SubmissionStatus.JUDGING)
     for test in tests_set:
@@ -83,13 +87,12 @@ def run_judger(submission_id):
         ), shell=True)
         if judge_code != 0:
             update_submission_status(
-                submission=submission, status=JUDGER_ERRORS[judge_code])
+                submission=submission, status=SubmissionStatus.FINISHED, result=JUDGER_ERRORS[judge_code])
             return JUDGER_ERRORS[judge_code]
         else:
-            update_submission_status(submission=submission, current_test=test.position)
+            update_submission_status(submission=submission, status=SubmissionStatus.JUDGING, current_test=test.position)
         sleep(5) # pseudo time lag
-    update_submission_status(
-        submission=submission, status=JUDGER_ERRORS[0])
+    update_submission_status(submission=submission, status=SubmissionStatus.FINISHED, result=JUDGER_ERRORS[0])
 
     # Clean up
     subprocess.call("rm -f " + source_code_file, shell=True)

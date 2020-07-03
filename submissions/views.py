@@ -14,7 +14,8 @@ from submissions.tasks import run_judger
 class SubmissionsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Submission
-        fields = ("id", "author", "problem", "language", "status", "test_counts", "time", )
+        fields = ("id", "author", "problem", "language", "status", "result", "test_counts", "time",)
+
 
 class SubmissionDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,14 +36,15 @@ class SubmissionsView(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.C
     """
     Override POST method handler to create an async problem queue
     """
+
     def create(self, request, *args, **kwargs):
         print("Receive a submission")
-        print(json.loads(request.body))
 
         author = request.auth
 
         if author is None:
-            return Response(data=create_message("SUBMITTED_FAIL", results={"author": "NEED_LOGIN"}), status=HTTP_403_FORBIDDEN)
+            return Response(data=create_message("SUBMITTED_FAIL", results={"author": "NEED_LOGIN"}),
+                            status=HTTP_403_FORBIDDEN)
 
         submission_data = json.loads(request.body)
         submission_data['author'] = author.user.username
@@ -54,23 +56,20 @@ class SubmissionsView(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.C
             run_judger.delay(new_submission.id)
             return Response(data=create_message("SUBMITTED_SUCCESSFULLY"), status=HTTP_201_CREATED)
         else:
-            return Response(data=create_message("SUBMITTED_FAIL", results=submission_form.errors), status=HTTP_400_BAD_REQUEST)
+            return Response(data=create_message("SUBMITTED_FAIL", results=submission_form.errors),
+                            status=HTTP_400_BAD_REQUEST)
 
-    
     def retrieve(self, request, *args, **kwargs):
         if request.auth is None:
-            return Response(data=create_message(
-                                    message_code="LOADED_FAIL", 
-                                    results={}), 
-                            status=HTTP_403_FORBIDDEN)
+            return Response(data=create_message(message_code="LOADED_FAIL", results={}), status=HTTP_403_FORBIDDEN)
+
         submission = self.get_queryset().get(id=kwargs['pk'])
         serialized_submission = SubmissionDetailSerializer(submission).data
         return Response(data=create_message(
-                                message_code="LOADED_SUCCESSFULLY", 
-                                results=serialized_submission), 
-                        status=HTTP_200_OK)
+            message_code="LOADED_SUCCESSFULLY",
+            results=serialized_submission),
+            status=HTTP_200_OK)
 
-    
     def get_serializer_class(self):
         if self.action == "retrieve":
             return SubmissionDetailSerializer
