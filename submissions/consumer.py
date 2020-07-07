@@ -1,4 +1,3 @@
-from asgiref.sync import async_to_sync
 from channels.consumer import AsyncConsumer
 
 
@@ -19,7 +18,6 @@ class SubmissionConsumer(AsyncConsumer):
         await self.channel_layer.group_discard("submissions-client", self.channel_name)
 
     async def database_change(self, event):
-        # await self.send()
         print("From Consumer", event)
         await self.send({
             "type": "websocket.send",

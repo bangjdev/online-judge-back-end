@@ -55,7 +55,7 @@ std::string get_command_name(std::string command_path) {
 }
 
 std::string Judger::judge() {
-    std::string result;
+    std::string result = "";
     // Init sandbox
     exec_command("isolate --cleanup");    
     exec_result("isolate --init", result);
