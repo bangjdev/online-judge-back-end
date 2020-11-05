@@ -18,6 +18,7 @@ django-cleanup==4.0.0
 django-cors-headers==3.1.0
 djangorestframework==3.10.2
 future==0.18.2
+gunicorn==20.0.4
 hiredis==1.1.0
 hyperlink==20.0.1
 idna==2.10
