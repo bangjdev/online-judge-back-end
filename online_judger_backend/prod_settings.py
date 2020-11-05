@@ -17,8 +17,6 @@ SECURE_BROWSER_XSS_FILTER = True
 CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 
-DEBUG = False
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
