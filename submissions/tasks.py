@@ -35,7 +35,7 @@ def write_to_encrypted_file_path(author, content, extension):
     final_filename = '{}.{}'.format(filename, extension)
 
     final_filepath = os.path.join(upload_to, final_filename)
-    
+
     file_writer = open(final_filepath, "w")
     file_writer.write(content)
     file_writer.close()
@@ -64,7 +64,7 @@ def run_judger(submission_id):
 
     # Get set of tests
     tests_set = load_tests(submission.problem)
-    
+
     # Judging using judger
     update_submission_status(submission, status=SubmissionStatus.JUDGING)
     for test in tests_set:
@@ -91,7 +91,7 @@ def run_judger(submission_id):
             return JUDGER_ERRORS[judge_code]
         else:
             update_submission_status(submission=submission, status=SubmissionStatus.JUDGING, current_test=test.position)
-        sleep(5) # pseudo time lag
+        # sleep(5) # pseudo time lag
     update_submission_status(submission=submission, status=SubmissionStatus.FINISHED, result=JUDGER_ERRORS[0])
 
     # Clean up

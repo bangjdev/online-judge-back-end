@@ -8,7 +8,6 @@ from submissions.models import Submission
 
 @receiver(post_save, sender=Submission)
 def send_notification(sender, **kwargs):
-    print("Database changed, send socket to client")
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
         "submissions-client",
