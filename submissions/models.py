@@ -3,7 +3,7 @@ from enum import Enum
 from django.db import models
 from django.contrib.auth.models import User
 
-from lqdoj_backend.settings import SOURCE_CODE_FOLDER
+from online_judger_backend.settings import SOURCE_CODE_FOLDER
 from problems.models import Problem
 
 

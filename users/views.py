@@ -12,7 +12,7 @@ from rest_framework.viewsets import ModelViewSet
 from users.forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
 from users.serializers import UserSerializer
 
-from lqdoj_backend.json_response import *
+from online_judger_backend.json_response import *
 
 
 class UserView(ModelViewSet):

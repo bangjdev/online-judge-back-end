@@ -43,5 +43,5 @@ redis-server
 ```
 To start celery worker, cd to the project folder and run:
 ```bash
-sudo celery -A lqdoj_backend worker -l info
+sudo celery -A online_judger_backend worker -l info
 ```

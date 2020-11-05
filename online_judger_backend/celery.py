@@ -5,9 +5,9 @@ import os
 from celery import Celery
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lqdoj_backend.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'online_judger_backend.settings')
 
-app = Celery('lqdoj_backend')
+app = Celery('online_judger_backend')
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.

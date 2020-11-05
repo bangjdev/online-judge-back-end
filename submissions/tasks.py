@@ -3,11 +3,11 @@ import os, hashlib, uuid, subprocess
 
 from celery import shared_task
 
-from lqdoj_backend.settings import BASE_DIR, MEDIA_ROOT, JUDGER_ERRORS
+from online_judger_backend.settings import BASE_DIR, MEDIA_ROOT, JUDGER_ERRORS
 from submissions.models import Submission, Language
 from submissions.models import SubmissionStatus
 from tests.models import Test
-from lqdoj_backend.settings import SOURCE_CODE_FOLDER
+from online_judger_backend.settings import SOURCE_CODE_FOLDER
 
 OUTPUT_EXEC_PATH = os.path.join(BASE_DIR, os.path.join(MEDIA_ROOT, "tmp"))
 OUTPUT_EXEC_NAME = "userexec"

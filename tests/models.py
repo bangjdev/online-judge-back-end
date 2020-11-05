@@ -4,7 +4,7 @@ import uuid
 
 from django.db import models
 
-from lqdoj_backend.settings import TEST_FOLDER
+from online_judger_backend.settings import TEST_FOLDER
 from problems.models import Problem
 
 

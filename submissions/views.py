@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
 from rest_framework.viewsets import GenericViewSet
 
-from lqdoj_backend.json_response import *
-from lqdoj_backend.paginations import CustomPagination
+from online_judger_backend.json_response import *
+from online_judger_backend.paginations import CustomPagination
 from submissions.models import Submission
 from submissions.tasks import run_judger
 

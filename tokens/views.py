@@ -7,8 +7,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED, HTTP_500_INTERNAL_SERVER_ERROR
 from rest_framework.viewsets import GenericViewSet
-from lqdoj_backend.messages_code import *
-from lqdoj_backend.json_response import *
+from online_judger_backend.messages_code import *
+from online_judger_backend.json_response import *
 
 
 class TokenSerializer(serializers.ModelSerializer):

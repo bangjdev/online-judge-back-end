@@ -6,7 +6,7 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.response import Response
 from rest_framework.status import *
 
-from lqdoj_backend.json_response import *
+from online_judger_backend.json_response import *
 from problems.models import Problem
 from problems.serializers import ProblemListSerializer, ProblemSerializer
 

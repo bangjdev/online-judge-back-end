@@ -5,7 +5,7 @@ from PIL import Image
 from django.contrib.auth.models import User
 from django.db import models
 
-from lqdoj_backend.settings import AVATAR_FOLDER
+from online_judger_backend.settings import AVATAR_FOLDER
 
 
 def get_time_stamp():

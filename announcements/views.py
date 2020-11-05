@@ -6,9 +6,9 @@ from rest_framework.status import *
 
 from django.template.defaultfilters import truncatechars_html
 
-from lqdoj_backend.paginations import CustomPagination
+from online_judger_backend.paginations import CustomPagination
 from .models import Announcement
-from lqdoj_backend.json_response import *
+from online_judger_backend.json_response import *
 
 
 class IsStaffOrReadOnly(permissions.BasePermission):
