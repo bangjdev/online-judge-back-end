@@ -114,7 +114,3 @@ venv.bak/
 /judger/judger
 /submissions/judger
 /media/
-
-
-# Settings
-online_judger_backend/prod_settings.py
