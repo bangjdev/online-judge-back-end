@@ -31,6 +31,7 @@ def load_tests(problem_code):
 
 def write_to_encrypted_file_path(author, content, extension):
     upload_to = os.path.join(MEDIA_ROOT, hashlib.sha1(SOURCE_CODE_FOLDER.encode('UTF-8')).hexdigest())
+    subprocess.call("mkdirs " + upload_to)
     filename = author.username + "_" + uuid.uuid4().__str__()
     final_filename = '{}.{}'.format(filename, extension)
 
