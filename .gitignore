@@ -111,7 +111,7 @@ venv.bak/
 # IDE stuff:
 .idea/
 /localfiles/
-/media/
+/media/*/*
 
 
 # Pipenv
