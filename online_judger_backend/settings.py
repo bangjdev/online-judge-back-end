@@ -123,7 +123,7 @@ JUDGER_ERRORS = [
     "WRONG_ANSWER"
 ]
 
-if DEBUG:
+if os.environ.get('DEV', False):
     from .dev_settings import *
 else:
     from .prod_settings import *
