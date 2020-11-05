@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY", default="what are you looking for?")
 
-CORS_ORIGIN_WHITELIST = [os.environ.get("FRONTEND_ORIGIN", default="what are you looking for?")]
+CORS_ORIGIN_WHITELIST = [os.environ.get("FRONTEND_ORIGIN", default="http://localhost:3000")]
 ALLOWED_HOSTS = [os.environ.get("FRONTEND_HOST", default="what are you looking for?")]
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
