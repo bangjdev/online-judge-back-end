@@ -111,8 +111,6 @@ venv.bak/
 # IDE stuff:
 .idea/
 /localfiles/
-/judger/judger
-/submissions/judger
 /media/
 
 
