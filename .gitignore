@@ -114,3 +114,8 @@ venv.bak/
 /judger/judger
 /submissions/judger
 /media/
+
+
+# Pipenv
+Pipfile
+Pipfile.lock
