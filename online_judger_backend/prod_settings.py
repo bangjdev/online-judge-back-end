@@ -7,10 +7,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", default="what are you looking for?")
+SECRET_KEY = os.environ.get("SECRET_KEY", default="what are you looking for?")
 
-CORS_ORIGIN_WHITELIST = [os.getenv("FRONTEND_ORIGIN", default="what are you looking for?")]
-ALLOWED_HOSTS = [os.getenv("FRONTEND_HOST", default="what are you looking for?")]
+CORS_ORIGIN_WHITELIST = [os.environ.get("FRONTEND_ORIGIN", default="what are you looking for?")]
+ALLOWED_HOSTS = [os.environ.get("FRONTEND_HOST", default="what are you looking for?")]
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True

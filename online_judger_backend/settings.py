@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEVELOPMENT_ENV", default=True)
+DEBUG = os.environ.get('DEBUG', False)
 
 
 # Application definition
