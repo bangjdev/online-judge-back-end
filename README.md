@@ -1,4 +1,4 @@
-# LQDOJ's back-end
+# Online Judger back-end
 
 ## First time clone
 
