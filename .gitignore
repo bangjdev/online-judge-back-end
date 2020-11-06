@@ -112,6 +112,7 @@ venv.bak/
 .idea/
 /localfiles/
 /media/*/*
+!/media/*/placeholder
 
 
 # Pipenv
