@@ -75,7 +75,7 @@ std::string Judger::judge() {
     // std::cout << "Running: " << isolate_cmd << "\n\n";
     bool success = exec_result(isolate_cmd, result);
 
-    // std::cout << "Status: " << success << "\n\nTIMOUT RESPONSE: " << result << "\n\n";
+    std::cout << "Status: " << success << "\n\nTIMOUT RESPONSE: " << result << "\n\n";
 
     if (!success) {
         return RE_MESS;

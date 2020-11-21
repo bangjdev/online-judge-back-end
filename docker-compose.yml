@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:13.0-alpine
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=codegang
+
+  redis:
+    image: redis:6.0.9-alpine
+    ports:
+      - "6379:6379"
+
+  worker:
+    build: .
+    command: celery -A online_judger_backend worker -l info
+    depends_on:
+      - "redis"
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "${DOCKER_STOP_GRACE_PERIOD:-3s}"
+
+  web:
+    build: .
+    command: gunicorn online_judger_backend.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
