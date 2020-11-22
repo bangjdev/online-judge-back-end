@@ -16,18 +16,17 @@ ENV LANG C.UTF-8
 # set project environment variables
 # grab these via Python's os.environ
 # these are 100% optional here
-ENV DEBUG=True
-ENV PORT=8000
-ENV SECRET_KEY=3zq%s_=iq@9o^s93-39*)jz&q3aj#%+3kxd*xsb)vj$)qdrddt
-ENV FRONTEND_ORIGIN=http://localhost:3000
-ENV FRONTEND_HOST=*
-ENV DATABASE_HOST=db
-ENV DATABASE_PORT=5432
-ENV DATABASE_NAME=codegang
-ENV DATABASE_USER=admin
-ENV DATABASE_PWD=123456
 
-ENV REDIS_URL=redis://redis:6379/
+# ENV DEBUG=#####################################
+# ENV SECRET_KEY=#####################################
+# ENV FRONTEND_ORIGIN=#####################################
+# ENV FRONTEND_HOST=#####################################
+# ENV DATABASE_HOST=#####################################
+# ENV DATABASE_PORT=#####################################
+# ENV DATABASE_NAME=#####################################
+# ENV DATABASE_USER=#####################################
+# ENV DATABASE_PWD=#####################################
+# ENV REDIS_URL=#####################################
 
 
 
