@@ -21,15 +21,7 @@ X_FRAME_OPTIONS = 'DENY'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': os.environ.get('DATABASE_HOST'),
-        'NAME': os.environ.get('DATABASE_NAME'),
-        'USER': os.environ.get('DATABASE_USER'),
-        'PASSWORD': os.environ.get('DATABASE_PWD'),
-        'PORT': os.environ.get('DATABASE_PORT'),
-        'CONN_MAX_AGE': 500
-    }
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL', ''), conn_max_age=600)
 }
 
 # Static files (CSS, JavaScript, Images)

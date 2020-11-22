@@ -38,7 +38,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python3-setuptools \
         python3-pip \
         python3-dev \
-        python3-venv \
         postgresql-common \
         python-psycopg2 \
         git \
@@ -54,6 +53,4 @@ RUN pip3 install --upgrade pip
 # RUN pipenv install --skip-lock --system --dev
 RUN pip3 install -r requirements.txt
 RUN python3 manage.py collectstatic --noinput
-
-EXPOSE 8000
-EXPOSE 5432
+RUN python manage.py migrate --run-syncdb
