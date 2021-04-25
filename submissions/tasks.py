@@ -105,7 +105,7 @@ def run_judger(submission_id):
     update_submission_status(submission=submission, status=SubmissionStatus.FINISHED, result=JUDGER_ERRORS[0])
 
     # Clean up
-    # subprocess.call("rm -f " + source_code_file, shell=True)
-    # subprocess.call("rm -f " + output_exec_path, shell=True)
+    subprocess.call("rm -f " + source_code_file, shell=True)
+    subprocess.call("rm -f " + output_exec_path, shell=True)
 
     return JUDGER_ERRORS[0]

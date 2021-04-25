@@ -4,7 +4,7 @@
 Judger::Judger(std::string c, std::string fi, std::string fo, std::string ck, std::string co,
            std::string ml, std::string tl) {
     command = c;
-    input_file = fo;
+    input_file = fi;
     output_file = fo;
     code_output = co;
     mem_lim = ml;
@@ -72,10 +72,10 @@ std::string Judger::judge() {
                                                           % command
                                                           % input_file
                                                           % code_output).str();
-    // std::cout << "Running: " << isolate_cmd << "\n\n";
+    // std::cout << "\nRunning: " << isolate_cmd << "\n\n";
     bool success = exec_result(isolate_cmd, result);
 
-    std::cout << "Status: " << success << "\n\nTIMOUT RESPONSE: " << result << "\n\n";
+    // std::cout << "Status: " << success << "\n\nTIMOUT RESPONSE: " << result << "\n\n";
 
     if (!success) {
         return RE_MESS;
@@ -94,6 +94,7 @@ std::string Judger::judge() {
     // Verify output
     std::string check_cmd = checker + " " + code_output + " " + output_file;
     exec_result(check_cmd, result);
+    // std::cout << "\n Diffcheck: " << result << "\n";
 
     // Cleanup
     exec_command("rm " + code_output);
